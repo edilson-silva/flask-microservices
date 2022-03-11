@@ -1,10 +1,9 @@
-from crypt import methods
 from unittest import result
+
 from flask import Blueprint
 from flask import jsonify
-from models import db
-from models import User
 
+from models import User
 
 user_blueprint = Blueprint('user_api_routes', __name__, url_prefix='/api/user')
 
@@ -14,5 +13,5 @@ def get_all_users():
     all_users = User.query.all()
     users = [user.serialize() for user in all_users]
 
-    response = {'message': 'Returning all users', 'data': result}
+    response = {'message': 'Returning all users', 'data': users}
     return jsonify(result)
