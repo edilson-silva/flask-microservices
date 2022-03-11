@@ -81,7 +81,7 @@ def user_exists(username):
     if user:
         return jsonify({'message': 'User exists'})
 
-    return jsonify({'message': 'User nor exists'}), 404
+    return jsonify({'message': 'User not exists'}), 404
 
 
 @user_blueprint.route('/', methods=['GET'])
