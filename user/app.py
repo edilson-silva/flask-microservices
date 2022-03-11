@@ -26,7 +26,7 @@ migrate = Migrate(app, models.db)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return models.User.quety.filter_by(id=user_id).first()
+    return models.User.query.filter_by(id=user_id).first()
 
 
 @login_manager.request_loader
