@@ -14,4 +14,4 @@ def get_all_users():
     users = [user.serialize() for user in all_users]
 
     response = {'message': 'Returning all users', 'data': users}
-    return jsonify(result)
+    return jsonify(response)
