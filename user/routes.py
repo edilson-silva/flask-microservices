@@ -67,9 +67,9 @@ def login():
 
 @user_blueprint.route('logout', methods=['POST'])
 def logout():
-    if current_user.is_authenticaed:
+    if current_user.is_authenticated:
         logout_user()
-        return jsonify({'message': 'Logged in'})
+        return jsonify({'message': 'Logged out'})
 
     return jsonify({'message': 'No user logged in'}), 401
 
