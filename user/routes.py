@@ -72,3 +72,13 @@ def logout():
         return jsonify({'message': 'Logged in'})
 
     return jsonify({'message': 'No user logged in'}), 401
+
+
+@user_blueprint.route('/<username>/exists', methods=['GET'])
+def user_exists(username):
+    user = User.query.filter_by(username=username).first()
+
+    if user:
+        return jsonify({'message': 'User exists'})
+
+    return jsonify({'message': 'User nor exists'}), 404
