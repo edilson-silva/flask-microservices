@@ -82,3 +82,11 @@ def user_exists(username):
         return jsonify({'message': 'User exists'})
 
     return jsonify({'message': 'User nor exists'}), 404
+
+
+@user_blueprint.route('/', methods=['GET'])
+def get_current_user():
+    if current_user.is_authenticated:
+        return jsonify({'result': current_user.serialize()}), 200
+
+    return jsonify({'message': 'User not logged in'}), 401
