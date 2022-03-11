@@ -2,7 +2,9 @@ from flask import Blueprint
 from flask import jsonify
 from flask import make_response
 from flask import request
+from flask_login import current_user
 from flask_login import login_user
+from flask_login import logout_user
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
@@ -61,3 +63,12 @@ def login():
 
     response = {'message': 'Access denied'}
     return make_response(jsonify(response), 401)
+
+
+@user_blueprint.route('logout', methods=['POST'])
+def logout():
+    if current_user.is_authenticaed:
+        logout_user()
+        return jsonify({'message': 'Logged in'})
+
+    return jsonify({'message': 'No user logged in'}), 401
