@@ -1,4 +1,9 @@
 from flask import Blueprint
+from flask import jsonify
+from flask import request
+
+from models import Book
+from models import db
 
 book_blueprint = Blueprint('book_api_routes', __name__, url_prefix='/api/book')
 
@@ -10,7 +15,22 @@ def get_all_books():
 
 @book_blueprint.route('/create', methods=['POST'])
 def create_book():
-    return 'Book created'
+    try:
+        book = Book()
+        book.name = request.form['name']
+        book.slug = request.form['slug']
+        book.price = request.form['price']
+        book.image = request.form['image']
+
+        db.session.add(book)
+        db.session.commit()
+
+        response = {'message': 'Book created', 'data': book.serialize()}
+    except Exception as e:
+        print(f'Create book error: {e}')
+        response = {'message': 'Book create error'}
+
+    return jsonify(response)
 
 
 @book_blueprint.route('/<slug>', methods=['GET'])
