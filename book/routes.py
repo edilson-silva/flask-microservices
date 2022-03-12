@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask import jsonify
 from flask import request
+from flask import make_response
 
 from models import Book
 from models import db
@@ -39,4 +40,11 @@ def create_book():
 
 @book_blueprint.route('/<slug>', methods=['GET'])
 def book_details(slug):
-    return f'Book details {slug}'
+    book = Book.query.filter_by(slug=slug).first()
+
+    if book:
+        response = {'data': book.serialize()}
+        return make_response(jsonify(response), 200)
+    else:
+        response = {'message': 'Book not found'}
+        return make_response(jsonify(response), 404)
