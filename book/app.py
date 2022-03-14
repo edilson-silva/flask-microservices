@@ -21,4 +21,5 @@ app.register_blueprint(book_blueprint)
 migrate = Migrate(app, models.db)
 
 if __name__ == '__main__':
+    print('\n\n>> Running BOOK microservice at 5002 port <<\n\n')
     app.run(debug=True, port=5002)

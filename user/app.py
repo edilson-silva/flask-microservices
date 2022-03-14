@@ -54,4 +54,5 @@ class CustomSessionInterface(SecureCookieSessionInterface):
 
 
 if __name__ == '__main__':
+    print('\n\n>> Running USER microservice at 5001 port <<\n\n')
     app.run(debug=True, port=5001)
