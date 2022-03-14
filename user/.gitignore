@@ -130,3 +130,10 @@ dmypy.json
 
 # Pycharm directories
 .idea
+
+# DB files
+database/*.db
+
+# Migration files
+migrations/*
+!migrations/.gitkeep
