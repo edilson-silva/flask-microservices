@@ -1,8 +1,9 @@
-from flask_sqlalchemy import SQLAlchemy
+from os import environ
 
-db = SQLAlchemy()
+from flask import Blueprint
 
-class Order(db.Table):
+order_blueprint = Blueprint('order_api_routes', __name__, '/api/order')
 
-    id = db.Column(db.String)
-    books = db.Column()
+USER_API = environ.get('USER_API')
+
+print('USE', USER_API)
