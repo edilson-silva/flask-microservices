@@ -3,7 +3,10 @@ from os import environ
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 from flask import Flask
+from flask_migrate import Migrate
 
+from models import db
+from models import init_app
 from routes import order_blueprint
 
 load_dotenv(find_dotenv())
@@ -14,6 +17,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = environ.get('SQLALCHEMY_TRACK_MODIFICATIONS').lower() in ("true", "1")
 
 app.register_blueprint(order_blueprint)
+init_app(app)
+migrate = Migrate(app, db)
 
 if __name__ == '__main__':
     print('\n\n>> Running ORDER microservice at 5001 port <<\n\n')
