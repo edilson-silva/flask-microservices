@@ -9,6 +9,8 @@ Flask store application based on microservices architecture
 
 [Book](book/README.md)
 
+[Order](order/README.md)
+
 <br />
 
 ## Notes
