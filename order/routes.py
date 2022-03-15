@@ -5,7 +5,7 @@ from flask import jsonify
 
 from models import Order
 
-order_blueprint = Blueprint('order_api_routes', __name__, '/api/order')
+order_blueprint = Blueprint('order_api_routes', __name__, url_prefix='/api/order')
 
 USER_API = environ.get('USER_API')
 
