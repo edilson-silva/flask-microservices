@@ -30,7 +30,7 @@ def get_user(api_key) -> Dict:
 
 
 @order_blueprint.route('/', methods=['GET'])
-def get_open_order():
+def get_open_orders():
     api_key = request.headers.get('Authorization')
 
     if not api_key:
@@ -50,7 +50,7 @@ def get_open_order():
     if open_order:
         return jsonify({'data': open_order.serialize()}), 200
 
-    return jsonify({'message': 'No open order'}), 404
+    return jsonify({'message': 'No open orders'}), 404
 
 
 @order_blueprint.route('/add-item', methods=['POST'])
