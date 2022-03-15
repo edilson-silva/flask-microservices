@@ -34,6 +34,6 @@ class OrderItem(db.Model):
 
     def serialize(self):
         return {
-            'product': self.book_id,
+            'book': self.book_id,
             'quantity': self.quantity
         }
