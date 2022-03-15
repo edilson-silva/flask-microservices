@@ -99,7 +99,7 @@ def add_order_item():
 
 
 @order_blueprint.route('/checkout', methods=['POST'])
-def get_open_order():
+def checkout():
     api_key = request.headers.get('Authorization')
 
     if not api_key:
