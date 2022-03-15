@@ -95,7 +95,7 @@ def add_order_item():
     db.session.add(open_order)
     db.session.commit()
 
-    return jsonify({'data': open_order}), 200
+    return jsonify({'data': open_order.serialize()}), 200
 
 
 @order_blueprint.route('/checkout', methods=['POST'])
