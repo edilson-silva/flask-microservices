@@ -23,7 +23,7 @@ def get_user(api_key) -> Dict:
     response = requests.get(USER_API, headers=headers)
 
     if not response.ok:
-        return {'message': 'User nor authorized'}
+        return {'message': 'User not authorized'}
 
     user = response.json()
     return user
@@ -45,7 +45,7 @@ def get_open_order():
 
     user_id = user['id']
 
-    open_order = Order.query.filter(user_id=user_id, is_open=1).first()
+    open_order = Order.query.filter_by(user_id=user_id, is_open=1).first()
 
     if open_order:
         return jsonify({'data': open_order.serialize()}), 200
@@ -71,7 +71,7 @@ def add_order_item():
     quantity = int(request.form['quantity'])
     user_id = user['id']
 
-    open_order = Order.query.filter(user_id=user_id, is_open=1).first()
+    open_order = Order.query.filter_by(user_id=user_id, is_open=1).first()
 
     if not open_order:
         open_order = Order()
@@ -114,7 +114,7 @@ def checkout():
 
     user_id = user['id']
 
-    open_order = Order.query.filter(user_id=user_id, is_open=1).first()
+    open_order = Order.query.filter_by(user_id=user_id, is_open=1).first()
 
     if open_order:
         open_order.is_open = False
