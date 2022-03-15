@@ -98,6 +98,35 @@ def add_order_item():
     return jsonify({'data': open_order}), 200
 
 
+@order_blueprint.route('/checkout', methods=['POST'])
+def get_open_order():
+    api_key = request.headers.get('Authorization')
+
+    if not api_key:
+        return jsonify({'message': 'Not logged in'}), 401
+
+    response = get_user(api_key)
+
+    user = response.get('data')
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    user_id = user['id']
+
+    open_order = Order.query.filter(user_id=user_id, is_open=1).first()
+
+    if open_order:
+        open_order.is_open = False
+
+        db.session.add(open_order)
+        db.session.commit()
+
+        return jsonify({'data': open_order.serialize()}), 200
+
+    return jsonify({'message': 'No open order'}), 404
+
+
 @order_blueprint.route('/all', methods=['GET'])
 def all_orders():
     orders = Order.query.all()
