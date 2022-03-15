@@ -29,6 +29,30 @@ def get_user(api_key) -> Dict:
     return user
 
 
+@order_blueprint.route('/', methods=['GET'])
+def get_open_order():
+    api_key = request.headers.get('Authorization')
+
+    if not api_key:
+        return jsonify({'message': 'Not logged in'}), 401
+
+    response = get_user(api_key)
+
+    user = response.get('data')
+
+    if not user:
+        return jsonify({'message': 'User not found'}), 404
+
+    user_id = user['id']
+
+    open_order = Order.query.filter(user_id=user_id, is_open=1).first()
+
+    if open_order:
+        return jsonify({'data': open_order.serialize()}), 200
+
+    return jsonify({'message': 'No open order'}), 404
+
+
 @order_blueprint.route('/add-item', methods=['POST'])
 def add_order_item():
     api_key = request.headers.get('Authorization')
