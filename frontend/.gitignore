@@ -130,3 +130,7 @@ dmypy.json
 
 # Pycharm directories
 .idea
+
+# Static images
+static/images/*
+!static/images/.gitkeep
