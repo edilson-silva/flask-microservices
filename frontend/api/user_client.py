@@ -4,7 +4,7 @@ from flask import session
 from . import USER_API_URL
 
 
-class UseClient:
+class UserClient:
 
     @staticmethod
     def login(form):
