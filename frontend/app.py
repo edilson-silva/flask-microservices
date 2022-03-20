@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
+from routes import blueprint
 
 load_dotenv(find_dotenv())
 
@@ -12,6 +13,8 @@ app = Flask(__name__, static_folder='static')
 app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 app.config['WTF_CSRF_SECRET_KEY'] = environ.get('WTF_CSRF_SECRET_KEY')
 app.config['UPLOAD_FOLDER'] = environ.get('static/images')
+
+app.register_blueprint(blueprint)
 
 login_manager = LoginManager(app)
 login_manager.init_app(app)
