@@ -73,3 +73,10 @@ def login():
             flash('Cannot Login')
 
     return render_template('login.html', form=form)
+
+
+@blueprint.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    flash('Logged out')
+    return redirect(url_for('frontend.index'))
