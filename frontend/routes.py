@@ -11,6 +11,7 @@ from api.book_client import BookClient
 from api.order_client import OrderClient
 from api.user_client import UserClient
 from forms.login_form import LoginForm
+from forms.register_form import RegistrationForm
 
 blueprint = Blueprint('frontend', __name__)
 
@@ -28,6 +29,27 @@ def index():
     return render_template('index.html', books=books)
 
 
+@blueprint.route('/register', methods=['POST', 'GET'])
+def register():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            username = form.username.data
+
+            if UserClient.user_exists(username):
+                flash("Please try another user name")
+                return render_template('register.html', form=form)
+            else:
+                user = UserClient.create_user(form)
+                if user:
+                    flash("Registered. Please login.")
+                    return redirect(url_for('frontend.index'))
+        else:
+            flash("Errors")
+
+    return render_template('register.html', form=form)
+
+
 @blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -37,7 +59,7 @@ def login():
             if api_key:
                 session['user_api_key'] = api_key
                 user = UserClient.get_user()
-                session['user'] = user['result']
+                session['user'] = user['data']
 
                 order = OrderClient.get_order()
                 if order.get('result'):
