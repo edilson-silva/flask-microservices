@@ -123,3 +123,19 @@ def checkout():
     OrderClient.checkout()
 
     return redirect(url_for('frontend.checkout'))
+
+
+@blueprint.route('/thank-you', methods=['GET'])
+def thank_you():
+    if 'user' not in session:
+        flash('Please login')
+        return redirect(url_for('frontend.login'))
+
+    if 'order' not in session:
+        flash("Please add some books to the cart")
+        return redirect(url_for("frontend.index"))
+
+    session.pop('order', None)
+    flash("Your order is processing.")
+
+    return render_template('thank_you.html')
