@@ -98,7 +98,7 @@ def add_order_item():
     return jsonify({'data': open_order.serialize()}), 200
 
 
-@order_blueprint.route('/checkout', methods=['POST'])
+@order_blueprint.route('/checkout', methods=['GET'])
 def checkout():
     api_key = request.headers.get('Authorization')
 
