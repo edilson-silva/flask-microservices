@@ -62,8 +62,8 @@ def login():
                 session['user'] = user['data']
 
                 order = OrderClient.get_order()
-                if order.get('result'):
-                    session['order'] = order['result']
+                if order.get('data'):
+                    session['order'] = order['data']
 
                 flash('Welcome back')
                 return redirect(url_for('frontend.index'))
