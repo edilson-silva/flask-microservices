@@ -100,3 +100,26 @@ def book_details(slug):
         flash("Book added to the cart")
 
     return render_template('book_info.html', book=book, form=form)
+
+
+@blueprint.route('/checkout', methods=['GET'])
+def checkout():
+    if 'user' not in session:
+        flash('Please login')
+        return redirect(url_for('frontend.login'))
+
+    if 'order' not in session:
+        flash("Please add some books to the cart")
+        return redirect(url_for("frontend.index"))
+
+    order = OrderClient.get_order()
+    order = order.get('data', {})
+    order_items = order.get('order_items', [])
+
+    if len(order_items) == 0:
+        flash("Please add some books to the cart")
+        return redirect(url_for("frontend.index"))
+
+    OrderClient.checkout()
+
+    return redirect(url_for('frontend.checkout'))
